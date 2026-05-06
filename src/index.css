@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .input-base {
+    @apply w-full bg-slate-800 border border-slate-700 text-slate-100 text-sm rounded-lg px-3 py-2.5 outline-none focus:border-amber-500/60 focus:ring-1 focus:ring-amber-500/20 transition-colors placeholder-slate-600;
+  }
+
+  .field-label {
+    @apply block text-xs font-medium text-slate-400 uppercase tracking-wide;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
