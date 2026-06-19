@@ -15,6 +15,7 @@ import {
 
 import type { AppState, TabId } from './types';
 import { loadState, saveState } from './lib/storage';
+import pb, { savePlannerState, loadPlannerState } from './lib/pocketbase';
 import { calculateProfit } from './lib/profitCalculations';
 import { seedPackage, seedScenario, seedChecklist, seedEmailTemplates } from './data/seedData';
 
@@ -56,8 +57,33 @@ export default function App() {
   });
   const [showWelcome, setShowWelcome] = useState(() => !loadState());
 
+  // SSO token handoff from the ImmersiveKit dashboard
+  // On success, load cloud state (preferred over localStorage)
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get('token');
+    if (!token) return;
+    pb.authStore.save(token, null);
+    pb.collection('users')
+      .authRefresh()
+      .then(async () => {
+        const cloudState = await loadPlannerState();
+        if (cloudState) {
+          setState({ ...DEFAULT_STATE, ...cloudState });
+          setShowWelcome(false);
+        }
+      })
+      .catch(() => pb.authStore.clear());
+    window.history.replaceState({}, '', window.location.pathname);
+  }, []);
+
+  // Persist to localStorage immediately; debounce cloud save
   useEffect(() => {
     saveState(state);
+    const timer = setTimeout(() => {
+      savePlannerState(state).catch(console.warn);
+    }, 1500);
+    return () => clearTimeout(timer);
   }, [state]);
 
   const setTab = (tab: TabId) => setState((s) => ({ ...s, activeTab: tab }));
