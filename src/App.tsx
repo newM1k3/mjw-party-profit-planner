@@ -15,7 +15,8 @@ import {
 
 import type { AppState, TabId } from './types';
 import { loadState, saveState } from './lib/storage';
-import pb, { savePlannerState, loadPlannerState } from './lib/pocketbase';
+import pb from './lib/pocketbase';
+import { resolveVenue, loadPlannerDrawer, savePlannerDrawer, type VenueContext } from './lib/venue';
 import { calculateProfit } from './lib/profitCalculations';
 import { seedPackage, seedScenario, seedChecklist, seedEmailTemplates } from './data/seedData';
 
@@ -56,35 +57,45 @@ export default function App() {
     return saved ? { ...DEFAULT_STATE, ...saved } : DEFAULT_STATE;
   });
   const [showWelcome, setShowWelcome] = useState(() => !loadState());
+  const [venueCtx, setVenueCtx] = useState<VenueContext | null>(null);
 
-  // SSO token handoff from the ImmersiveKit dashboard
-  // On success, load cloud state (preferred over localStorage)
+  // SSO token handoff + resolve the venue, then prefer its cloud drawer over localStorage.
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const token = params.get('token');
-    if (!token) return;
-    pb.authStore.save(token, null);
-    pb.collection('users')
-      .authRefresh()
-      .then(async () => {
-        const cloudState = await loadPlannerState();
-        if (cloudState) {
-          setState({ ...DEFAULT_STATE, ...cloudState });
-          setShowWelcome(false);
+    async function initApp() {
+      const params = new URLSearchParams(window.location.search);
+      const token = params.get('token');
+      if (token) {
+        try {
+          pb.authStore.save(token, null);
+          await pb.collection('users').authRefresh();
+        } catch {
+          pb.authStore.clear();
         }
-      })
-      .catch(() => pb.authStore.clear());
-    window.history.replaceState({}, '', window.location.pathname);
+        window.history.replaceState({}, '', window.location.pathname);
+      }
+
+      const venue = await resolveVenue();
+      if (!venue) return; // anonymous / no venue → localStorage seed flow
+      setVenueCtx(venue);
+
+      const cloudState = await loadPlannerDrawer(venue.venueId);
+      if (cloudState) {
+        setState({ ...DEFAULT_STATE, ...cloudState });
+        setShowWelcome(false);
+      }
+    }
+    void initApp();
   }, []);
 
-  // Persist to localStorage immediately; debounce cloud save
+  // Persist to localStorage immediately; debounce the venue drawer save.
   useEffect(() => {
     saveState(state);
+    if (!venueCtx) return;
     const timer = setTimeout(() => {
-      savePlannerState(state).catch(console.warn);
+      savePlannerDrawer(venueCtx, state).catch(console.warn);
     }, 1500);
     return () => clearTimeout(timer);
-  }, [state]);
+  }, [state, venueCtx]);
 
   const setTab = (tab: TabId) => setState((s) => ({ ...s, activeTab: tab }));
 
