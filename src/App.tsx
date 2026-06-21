@@ -11,6 +11,7 @@ import {
   Download,
   RefreshCw,
   TrendingUp,
+  Cloud,
 } from 'lucide-react';
 
 import type { AppState, TabId } from './types';
@@ -140,6 +141,12 @@ export default function App() {
             </div>
           </div>
           <div className="flex items-center gap-3">
+            {venueCtx && (
+              <div className="hidden sm:flex items-center gap-1.5 bg-cyan-500/10 border border-cyan-500/25 text-cyan-400 rounded-lg px-2.5 py-1.5" title="This plan is saved to your venue in the cloud">
+                <Cloud className="w-3.5 h-3.5" />
+                <span className="text-xs font-medium">Synced to your venue</span>
+              </div>
+            )}
             <div className="hidden sm:flex items-center gap-2 bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5">
               <span className="text-xs text-slate-400">True Profit:</span>
               <span className={`text-sm font-bold font-mono ${result.trueContributionProfit >= 0 ? 'text-green-400' : 'text-red-400'}`}>
