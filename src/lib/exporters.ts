@@ -15,7 +15,7 @@ export function exportMarkdown(state: AppState, result: ProfitResult): string {
 
   const lines: string[] = [];
 
-  lines.push(`# Party Profit Planner – ${pkg.name}`);
+  lines.push(`# Profit – ${pkg.name}`);
   lines.push(`**Event Type:** ${formatEventType(pkg.eventType)}`);
   lines.push(`**Room:** ${pkg.roomName}`);
   lines.push(`**Generated:** ${new Date().toLocaleDateString()}`);

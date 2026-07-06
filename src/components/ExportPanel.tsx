@@ -16,7 +16,7 @@ export default function ExportPanel({ state, result }: Props) {
     win.document.write(`
       <html>
         <head>
-          <title>Party Profit Planner – ${state.pkg.name}</title>
+          <title>Profit – ${state.pkg.name}</title>
           <style>
             body { font-family: -apple-system, sans-serif; max-width: 800px; margin: 40px auto; line-height: 1.6; color: #111; }
             h1,h2,h3 { color: #1a1a1a; }
@@ -88,7 +88,7 @@ export default function ExportPanel({ state, result }: Props) {
       </div>
 
       <div className="text-xs text-slate-600 border-t border-slate-800 pt-3">
-        Results are planning estimates only and do not constitute accounting or legal advice. Party Profit Planner is not a substitute for professional financial analysis.
+        Results are planning estimates only and do not constitute accounting or legal advice. Profit is not a substitute for professional financial analysis.
       </div>
     </div>
   );

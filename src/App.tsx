@@ -136,7 +136,7 @@ export default function App() {
               <TrendingUp className="w-4 h-4" />
             </div>
             <div>
-              <h1 className="text-sm font-bold text-slate-100 leading-none">Party Profit Planner</h1>
+              <h1 className="text-sm font-bold text-slate-100 leading-none">Profit</h1>
               <p className="text-xs text-slate-500 leading-none mt-0.5">{state.pkg.name}</p>
             </div>
           </div>

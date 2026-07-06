@@ -1,4 +1,4 @@
-// venue.ts — Party Profit Planner on the unified spine (Phase 3).
+// venue.ts — Profit on the unified spine (Phase 3).
 //
 // The planner state is a venue-scoped drawer (tool_key=party_profit, scope=venue). The venue is a
 // platform `projects` record, resolved via the user's org membership (mirrors the Corporate

@@ -19,7 +19,7 @@ export default function WelcomeHero({ onGetStarted }: Props) {
         </h1>
 
         <p className="text-slate-400 text-lg md:text-xl mb-8 leading-relaxed max-w-2xl mx-auto">
-          Party Profit Planner calculates the <strong className="text-slate-200">true event profit</strong> of
+          Profit calculates the <strong className="text-slate-200">true event profit</strong> of
           birthday parties and private events — not just gross booking revenue. Factor in labor,
           cleanup, consumables, discounts, prop wear, and lost room turnover.
         </p>
@@ -32,7 +32,7 @@ export default function WelcomeHero({ onGetStarted }: Props) {
               <p className="text-slate-400 text-sm leading-relaxed">
                 A <span className="text-amber-400 font-semibold">$250 party</span> can become a{' '}
                 <span className="text-red-400 font-semibold">$14 profit</span> after labor, cleanup,
-                favors, and lost room turnover. Party Profit Planner shows you the real number
+                favors, and lost room turnover. Profit shows you the real number
                 before you sell it.
               </p>
             </div>
