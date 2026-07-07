@@ -10,48 +10,47 @@
 
 # MJW Party Profit Planner
 
-A premium party and event business profit planning tool for escape room owners, party venue operators, and event hosts. It helps model pricing, calculate profitability, compare scenarios, build cost and revenue structures, and export polished summaries — with optional **PocketBase cloud saves** for persisting plans across sessions.
+A premium profit-planning tool for party and event venue operators. It helps design, save, export, and compare pricing packages with a purpose-built calculator covering revenue, costs, opportunity cost, and net profit. The app includes local/offline saved scenarios, optional **PocketBase cloud saves**, checklist and email template builders, scenario comparison, and full export support.
 
 ## Screenshots
 
-| Dashboard Overview | Scenario Comparison |
+| Desktop Dashboard | Package Setup & Results |
 | :---- | :---- |
-| MJW Party Profit Planner results dashboard | MJW Party Profit Planner scenario comparison view |
+| MJW Party Profit Planner desktop dashboard interface | MJW Party Profit Planner package setup and results state |
 
 ## What It Does
 
-Unlike general-purpose spreadsheets, this tool is built around the terminology and cost structures that party venue and escape room operators already work with — packages, add-ons, headcounts, and per-event margins.
+Unlike generic spreadsheet tools, this app uses terminology and structures that party venue operators and event planners already know.
 
 | Panel | Purpose |
 | :---- | :---- |
-| **Welcome Hero** | Onboarding entry point with guided setup prompts. |
-| **Package Setup** | Define party packages with names, pricing tiers, and included items. |
-| **Revenue Builder** | Model revenue from ticket sales, packages, and add-ons per event. |
-| **Cost Builder** | Enter fixed and variable costs — staffing, supplies, venue overhead. |
-| **Checklist Builder** | Build per-event operational checklists tied to a package or scenario. |
-| **Results Dashboard** | See profit, margin, break-even, and per-head metrics at a glance. |
-| **Scenario Comparison** | Compare multiple pricing or cost configurations side by side. |
-| **Opportunity Cost Panel** | Weigh trade-offs between booking types or time slots. |
-| **Email Template Panel** | Generate client-facing email copy based on the current plan. |
-| **Export Panel** | Download or share a formatted summary of the current plan. |
+| **Welcome Hero** | Onboarding entry point with quick-start guidance. |
+| **Package Setup** | Define your event packages, capacity, and base pricing. |
+| **Revenue Builder** | Model ticket sales, add-ons, and upsell revenue streams. |
+| **Cost Builder** | Itemise fixed and variable costs per event. |
+| **Opportunity Cost** | Factor in the value of time slots and alternative uses. |
+| **Results Dashboard** | View net profit, margin, break-even, and per-head figures. |
+| **Scenario Comparison** | Side-by-side analysis of multiple pricing scenarios. |
+| **Checklist Builder** | Build pre-event and post-event operational checklists. |
+| **Email Template Panel** | Draft and store client-facing email templates. |
+| **Export Panel** | Export results to portable formats for sharing or records. |
 
 **Key interactions:**
 
-- Set up packages and pricing in the Package Setup panel.
-- Enter expected revenue streams in the Revenue Builder.
-- Log all costs — fixed and variable — in the Cost Builder.
-- View live profit, margin, and break-even calculations in the Results Dashboard.
-- Build and compare multiple pricing scenarios in the Scenario Comparison panel.
-- Assess opportunity costs between competing booking options.
-- Generate email copy pre-filled with plan details for client outreach.
-- Export the complete plan as a formatted file for sharing or record-keeping.
-- Save and load plans via optional PocketBase cloud persistence.
+- Define one or more packages through the Package Setup panel.
+- Add revenue line items in the Revenue Builder and cost line items in the Cost Builder.
+- Factor in opportunity costs for each time slot or day-part.
+- View live profit calculations, margin percentages, and break-even attendance in the Results Dashboard.
+- Compare multiple pricing scenarios side by side in the Scenario Comparison panel.
+- Build operational checklists and draft email templates for client communication.
+- Save and load scenarios locally or via PocketBase cloud.
+- Export results and summaries for use outside the app.
 
 ## How to Use
 
-Open the app and start with the Welcome Hero to understand the planning flow. Work left to right: configure your packages first, then enter your expected revenue, then log your costs. The Results Dashboard updates live as you enter data. Use Scenario Comparison to test a price increase or headcount change before committing, and use the Export Panel when you are ready to share or archive the plan.
+The app opens with a Welcome Hero so new users immediately understand where to begin. Start by entering a package name and capacity in Package Setup, then move through Revenue Builder and Cost Builder to model a real event. The Results Dashboard updates live as figures change. Use Scenario Comparison when evaluating a price increase or capacity change before committing. Checklists and email templates can be built at any stage and reused across events.
 
-The app is designed for desktop use where form entry, side-by-side comparisons, and dashboard review are most comfortable, but it remains usable on tablet and mobile for quick reviews.
+The tool is designed for desktop use where form-heavy data entry is most comfortable, but all panels remain accessible on smaller screens for review and reference.
 
 ## Stack
 
@@ -61,8 +60,8 @@ The app is designed for desktop use where form entry, side-by-side comparisons, 
 | Build tool | Vite 5 |
 | Styling | Tailwind CSS 3 |
 | Icons | Lucide React |
-| Cloud persistence | PocketBase (via pocketbase ^0.26.8) |
-| Additional data layer | @supabase/supabase-js ^2.57.4 |
+| Optional cloud persistence | PocketBase |
+| Optional data layer | Supabase (`@supabase/supabase-js`) |
 | Hosting | Netlify |
 
 ## Local Development
@@ -75,7 +74,7 @@ npm install
 npm run dev
 ```
 
-The app works fully with **no environment variables**. Without a PocketBase URL configured, plans are managed in local browser state and can still be exported. Configure `VITE_POCKETBASE_URL` to enable cloud saves.
+The app works fully with **no environment variables**. Without a PocketBase URL configured, it runs as a local/offline browser app with localStorage-based scenario saves and full export support.
 
 ## Quality Checks
 
@@ -103,30 +102,30 @@ npm run typecheck  # TypeScript type check (no emit)
 
 ## Environment Variables
 
-All environment variables are optional unless you enable the related feature. The app remains production-usable in local-only mode with no configured variables.
+All environment variables are optional unless you enable the related feature. The app remains fully usable in local-only mode with no configured variables.
 
 | Variable | Required? | Scope | Enables | Description |
 | :---- | :---- | :---- | :---- | :---- |
-| `VITE_POCKETBASE_URL` | Optional | Frontend/public | PocketBase cloud saves | Public PocketBase/PocketHost URL used for plan persistence and user-scoped storage. Example: `https://immersive-kit.pockethost.io`. |
+| `VITE_POCKETBASE_URL` | Optional | Frontend/public | PocketBase cloud scenario saves | Public PocketBase/PocketHost URL used for authentication and user-scoped CRUD. Example: `https://immersive-kit.pockethost.io`. |
 
-## Saved Plans and PocketBase Cloud Saves
+## Saved Scenarios and PocketBase Cloud Saves
 
-The app works fully with **no environment variables**. In local-only mode, plan state is held in browser memory for the current session, and users can still build, compare, and export full profit plans. Configuring `VITE_POCKETBASE_URL` enables cloud persistence so plans survive page reloads and can be accessed across devices.
+The app works fully with **no environment variables**. In local-only mode, scenarios are stored in browser `localStorage`, and users can still create, load, edit, and export their profit plans. This ensures the planner is safe to deploy and use before PocketBase is configured.
 
-When `VITE_POCKETBASE_URL` is configured, the app connects to the specified PocketBase instance to read and write plan records. Normal user authentication runs through the public PocketBase URL; **no PocketBase superuser token is placed in frontend code**.
+Cloud saves are optional. When `VITE_POCKETBASE_URL` is set, users can sign in and save scenario records to PocketBase. Authentication runs through the public PocketBase URL; **no superuser token is placed in frontend code**.
 
-### Recommended `party_plans` Collection
+### Recommended `scenarios` Collection
 
-Create a PocketBase collection named `party_plans`. The implementation expects authenticated users to own their own records through an `owner` relation field. For the MJW canonical schema, configure the following fields.
+Create a PocketBase collection named `scenarios`. The implementation expects authenticated users to own their own records. Configure the following fields.
 
 | Field | Type | Notes |
 | :---- | :---- | :---- |
-| `title` | text | Display name for the saved plan. |
-| `description` | text | Optional notes about the event or scenario. |
+| `title` | text | Display name for the saved scenario. |
+| `description` | text | Optional notes about the scenario. |
 | `owner` | relation to `users` | Should point to the authenticated user. |
-| `plan_json` | json | Stores packages, revenue, costs, and scenario data. |
+| `scenario_json` | json | Stores the full scenario configuration including packages, revenue, and costs. |
 | `visibility` | select | Recommended values: `private`, `shared`. |
-| `version` | number | Incremented on save for conflict tracking. |
+| `version` | number | Incremented on save to support conflict detection. |
 | `created` | system field | Managed by PocketBase. |
 | `updated` | system field | Managed by PocketBase. |
 
@@ -153,39 +152,40 @@ The `netlify.toml` at the project root configures the Vite build and static rout
   status = 200
 ```
 
-Deploy first with no environment variables to confirm the local-only app works, then add `VITE_POCKETBASE_URL` to enable cloud plan saves.
+Deploy first with no environment variables to confirm the local-only app works, then add `VITE_POCKETBASE_URL` to enable cloud saves.
 
 ## Accessibility and Production Readiness
 
-The release UI includes accessible labels on major panel controls, cost and revenue inputs, scenario comparison actions, and export controls. Empty and unconfigured states are intentionally explicit so the app remains understandable before optional services are set up. The Welcome Hero provides onboarding guidance for new users arriving without context.
+Major panel controls, form inputs, and action buttons include accessible labels. The Welcome Hero provides clear onboarding so users understand the workflow before entering data. Empty and unconfigured states are explicit so the app remains understandable before optional services are set up. The Results Dashboard reflects live calculation state so users always see current figures without a manual refresh step.
 
 ## Project Structure
 
 ```
 src/
   components/
-    ChecklistBuilder.tsx      # Per-event operational checklist editor
-    CostBuilder.tsx           # Fixed and variable cost entry
-    EmailTemplatePanel.tsx    # Client email copy generator
-    ExportPanel.tsx           # Plan export and download
-    OpportunityCostPanel.tsx  # Trade-off analysis between booking options
-    PackageSetupPanel.tsx     # Party package and pricing configuration
+    ChecklistBuilder.tsx      # Pre/post-event operational checklist builder
+    CostBuilder.tsx           # Fixed and variable cost line-item editor
+    EmailTemplatePanel.tsx    # Client-facing email template drafting
+    ExportPanel.tsx           # Export results and summaries
+    OpportunityCostPanel.tsx  # Time-slot and alternative-use cost modelling
+    PackageSetupPanel.tsx     # Package name, capacity, and base pricing
     ResultsDashboard.tsx      # Live profit, margin, and break-even display
-    RevenueBuilder.tsx        # Revenue stream modelling
-    ScenarioComparison.tsx    # Side-by-side scenario comparison
+    RevenueBuilder.tsx        # Revenue stream and add-on modelling
+    ScenarioComparison.tsx    # Side-by-side scenario analysis
     WelcomeHero.tsx           # Onboarding entry point
   data/
-    seedData.ts               # Default/example plan data
+    seedData.ts               # Example/starter scenario data
   lib/
-    exporters.ts              # Plan export helpers
+    exporters.ts              # Export helpers
     pocketbase.ts             # Optional PocketBase client wrapper
     profitCalculations.ts     # Core profit, margin, and break-even logic
-    storage.ts                # Local state persistence helpers
-    venue.ts                  # Venue-specific configuration utilities
+    storage.ts                # Local autosave and scenario persistence
+    venue.ts                  # Venue-level configuration helpers
   types/
-    index.ts                  # Shared plan and scenario types
-  App.tsx                     # Root layout and panel routing
+    index.ts                  # Shared types for scenarios, packages, and costs
+  App.tsx                     # Root layout and panel navigation
   main.tsx                    # Entry point
+
 netlify.toml                  # Netlify build and redirect configuration
 ```
 
@@ -193,14 +193,12 @@ netlify.toml                  # Netlify build and redirect configuration
 
 ### v1.0.0 — Initial Production Release
 
-- Launched Package Setup, Revenue Builder, Cost Builder, and Results Dashboard with live profit and margin calculations.
-- Added Scenario Comparison panel for side-by-side pricing and cost model analysis.
-- Added Opportunity Cost Panel for trade-off analysis between competing booking types.
-- Added Email Template Panel for generating client-facing copy from plan data.
-- Added Export Panel for downloading formatted plan summaries.
-- Added Checklist Builder for per-event operational checklists.
-- Included optional PocketBase cloud persistence with local-only fallback.
-- Added Welcome Hero onboarding, seed data for first-time users, and Netlify deployment configuration.
+- Built complete profit-planning workflow: Package Setup, Revenue Builder, Cost Builder, Opportunity Cost, and Results Dashboard.
+- Added Scenario Comparison for side-by-side pricing analysis.
+- Added Checklist Builder and Email Template Panel for operational use.
+- Added Export Panel for sharing and record-keeping.
+- Added local-only operation with optional PocketBase cloud saves.
+- Added Netlify deployment configuration and environment variable documentation.
 
 ---
 
